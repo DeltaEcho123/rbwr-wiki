@@ -100,10 +100,14 @@ textarea.field{min-height:220px;resize:vertical;font:13px/1.65 ui-monospace,SFMo
 .role{display:inline-block;border:1px solid var(--line);padding:3px 7px;border-radius:2px;font-size:11px;color:var(--muted);white-space:nowrap}
 .role.admin{background:var(--soft);border-color:#cbded9;color:var(--accent-dark)}
 .role.editor{color:var(--accent-dark);border-color:#cbded9}
+.role.reader{color:#566c84;border-color:#d3dce7}
+.role.owner{background:#233a38;border-color:#233a38;color:white}
 .row-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
 .small-btn{background:white;border:1px solid var(--line);border-radius:3px;padding:5px 8px;font-size:11px;color:var(--ink)}
 .small-btn:hover{background:var(--soft)}
 .small-btn.remove{color:var(--danger)}
+.small-btn:disabled{opacity:.5;cursor:not-allowed}
+.role-select{width:125px;min-width:110px;padding:6px 7px;font-size:12px}
 .empty{padding:24px;text-align:center;color:var(--muted);font-size:13px}
 .form-title{font-size:15px;margin:0 0 4px}
 .form-desc{font-size:12px;color:var(--muted);margin:0 0 17px}
@@ -161,8 +165,8 @@ textarea.field{min-height:220px;resize:vertical;font:13px/1.65 ui-monospace,SFMo
     <div class="login-popover" id="login-popover">
      <h2>Contributor access</h2>
      <p class="hint">Sign in with your Discord account</p>
-     <button class="btn block" id="discord-login" type="button">Continue with Discord <span aria-hidden="true">→</span></button>
-     <p class="login-note">Reading is public. Editing requires administrator approval.</p>
+     <button class="btn block" id="discord-login" type="button">Continue with Discord →</button>
+     <p class="login-note">Reading is public. Editing requires approval.</p>
      <p id="login-message" class="status" role="status" hidden></p>
     </div>
    </details>
@@ -177,7 +181,7 @@ textarea.field{min-height:220px;resize:vertical;font:13px/1.65 ui-monospace,SFMo
    <h1>RBWR Wiki</h1>
    <p class="lead">A community-maintained technical reference for the RBWR simulator.</p>
    <div class="actions">
-    <a class="primary" href="#browse">Browse the wiki <span class="arrow" aria-hidden="true">→</span></a>
+    <a class="primary" href="#browse">Browse the wiki <span class="arrow">→</span></a>
     <a class="textlink" href="#about" id="about-link">About this project</a>
    </div>
   </section>
@@ -235,25 +239,69 @@ textarea.field{min-height:220px;resize:vertical;font:13px/1.65 ui-monospace,SFMo
 
  <section id="admin-view" class="view wrap">
   <div class="admin-head">
-   <div><div class="eyebrow">Administration</div><h1>Account management</h1><p>Manage who can contribute to the RBWR Wiki.</p></div>
+   <div><div class="eyebrow">Administration</div><h1>Account management</h1><p>Add contributors and manage their permissions.</p></div>
    <button class="btn secondary" id="back-home">← Back to homepage</button>
   </div>
-  <div class="notice"><strong>Administrator controls.</strong> Only the Discord account configured as the administrator in the Worker can approve or revoke editors. Newly registered accounts start with read-only access.</div>
+
+  <div class="notice">
+   <strong>Protected owner account.</strong>
+   The Discord ID configured as <code>ADMIN_DISCORD_ID</code> is protected by the server and cannot be demoted or revoked by delegated administrators.
+  </div>
+
   <div class="admin-grid">
-   <section class="panel">
-    <div class="panel-head"><h2>Registered accounts <span id="account-count" class="muted"></span></h2><input class="field search" id="user-search" type="search" placeholder="Search accounts…" aria-label="Search accounts"></div>
-    <div class="table-wrap" id="users-container"><table class="user-table"><thead><tr><th>Discord account</th><th>Discord ID</th><th>Role</th><th>Actions</th></tr></thead><tbody id="users-body"><tr><td colspan="4" class="empty">Loading accounts…</td></tr></tbody></table></div>
-    <p id="users-message" class="status" role="status" hidden></p>
-   </section>
-   <aside class="panel">
-    <div class="panel-head"><h2>Access policy</h2></div>
-    <div class="panel-body">
-     <div class="statline"><strong>Public visitors</strong><span>Read published pages</span></div>
-     <div class="statline"><strong>Pending accounts</strong><span>Read-only</span></div>
-     <div class="statline"><strong>Approved editors</strong><span>Create and edit pages</span></div>
-     <div class="statline"><strong>Administrator</strong><span>Manage accounts</span></div>
-     <div class="admin-footer-actions"><button class="btn secondary" id="admin-refresh">Refresh accounts</button><button class="btn danger" id="admin-logout">Log out</button></div>
-    </div>
+   <div>
+    <section class="panel">
+     <div class="panel-head">
+      <h2>Registered accounts <span id="account-count" class="muted"></span></h2>
+      <input class="field search" id="user-search" type="search" placeholder="Search accounts…" aria-label="Search accounts">
+     </div>
+     <div class="table-wrap">
+      <table class="user-table">
+       <thead><tr><th>Discord account</th><th>Discord ID</th><th>Role</th><th>Manage</th></tr></thead>
+       <tbody id="users-body"><tr><td colspan="4" class="empty">Loading accounts…</td></tr></tbody>
+      </table>
+     </div>
+     <div class="panel-body">
+      <p id="users-message" class="status" role="status" hidden></p>
+      <button class="btn secondary" id="admin-refresh" type="button">Refresh accounts</button>
+     </div>
+    </section>
+   </div>
+
+   <aside>
+    <section class="panel">
+     <div class="panel-head"><h2>Add account manually</h2></div>
+     <div class="panel-body">
+      <p class="form-desc">Add someone before their first login using their Discord User ID.</p>
+      <form id="add-user-form">
+       <label class="field-label" for="new-discord-id">Discord User ID</label>
+       <input class="field" id="new-discord-id" inputmode="numeric" pattern="[0-9]{17,20}" minlength="17" maxlength="20" required placeholder="123456789012345678">
+       <label class="field-label" for="new-user-role">Initial role</label>
+       <select class="field" id="new-user-role" required>
+        <option value="reader">Reader — view only</option>
+        <option value="editor" selected>Editor — create and edit</option>
+        <option value="admin">Administrator — manage accounts</option>
+       </select>
+       <div class="form-actions">
+        <button class="btn" id="add-user-button" type="submit">Add account</button>
+       </div>
+       <p id="add-user-message" class="status" role="status" hidden></p>
+      </form>
+      <p class="login-note">The user must sign in with the matching Discord account. Their username and avatar will appear after login.</p>
+     </div>
+    </section>
+
+    <section class="panel">
+     <div class="panel-head"><h2>Access policy</h2></div>
+     <div class="panel-body">
+      <div class="statline"><strong>Public visitors</strong><span>Read pages</span></div>
+      <div class="statline"><strong>Reader</strong><span>Read-only account</span></div>
+      <div class="statline"><strong>Editor</strong><span>Create and edit pages</span></div>
+      <div class="statline"><strong>Administrator</strong><span>Manage accounts</span></div>
+      <div class="statline"><strong>Pending</strong><span>No editing access</span></div>
+      <div class="admin-footer-actions"><button class="btn danger" id="admin-logout" type="button">Log out</button></div>
+     </div>
+    </section>
    </aside>
   </div>
  </section>
@@ -265,25 +313,24 @@ textarea.field{min-height:220px;resize:vertical;font:13px/1.65 ui-monospace,SFMo
 <script>
 "use strict";
 
-/*
- * Public API endpoint. No Discord client secret belongs in this file.
- */
 const API = "https://rbwr-wiki-api.leoncefleau-d7a.workers.dev";
 const TOKEN_KEY = "rbwr-wiki-session";
 const USER_KEY = "rbwr-wiki-user";
 
 const $ = selector => document.querySelector(selector);
 const accountMenu = $("#account-menu");
+
 let currentUser = null;
 let currentPage = null;
 let toastTimer;
+let usersCache = [];
 
 function showToast(message) {
   const toast = $("#toast");
   toast.textContent = message;
   toast.classList.add("show");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), 3000);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 3500);
 }
 
 function getToken() {
@@ -309,19 +356,29 @@ function isAdmin() {
 }
 
 function canEdit() {
-  return currentUser?.role === "admin" || currentUser?.role === "editor";
+  return isAdmin() || currentUser?.role === "editor";
 }
 
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
   })[char]);
 }
 
 async function api(path, options = {}) {
   const headers = new Headers(options.headers || {});
-  if (options.body !== undefined) headers.set("Content-Type", "application/json");
-  if (getToken()) headers.set("Authorization", `Bearer ${getToken()}`);
+
+  if (options.body !== undefined) {
+    headers.set("Content-Type", "application/json");
+  }
+
+  if (getToken()) {
+    headers.set("Authorization", `Bearer ${getToken()}`);
+  }
 
   const response = await fetch(API + path, {
     ...options,
@@ -330,7 +387,9 @@ async function api(path, options = {}) {
   });
 
   let data = {};
-  try { data = await response.json(); } catch {}
+  try {
+    data = await response.json();
+  } catch {}
 
   if (response.status === 401 && path !== "/auth/exchange") {
     clearSession();
@@ -339,13 +398,18 @@ async function api(path, options = {}) {
   if (!response.ok) {
     throw new Error(data.error || `Request failed (${response.status})`);
   }
+
   return data;
 }
 
 function showView(id) {
   document.querySelectorAll(".view").forEach(view => view.classList.remove("visible"));
   $("#home-view").style.display = id === "home-view" ? "block" : "none";
-  if (id !== "home-view") $("#" + id).classList.add("visible");
+
+  if (id !== "home-view") {
+    $("#" + id).classList.add("visible");
+  }
+
   accountMenu.open = false;
   window.scrollTo(0, 0);
 }
@@ -362,6 +426,7 @@ function showAdmin() {
     showLoginMessage("Administrator access is required.");
     return;
   }
+
   showView("admin-view");
   document.title = "Account management · RBWR Wiki";
   loadUsers();
@@ -369,6 +434,8 @@ function showAdmin() {
 
 function showLoginMessage(message, success = false) {
   const node = $("#login-message");
+  if (!node) return;
+
   node.hidden = false;
   node.textContent = message;
   node.classList.toggle("ok", success);
@@ -383,17 +450,23 @@ function updateHeader() {
     popover.innerHTML = `
       <h2>Contributor access</h2>
       <p class="hint">Sign in with your Discord account</p>
-      <button class="btn block" id="discord-login" type="button">Continue with Discord <span aria-hidden="true">→</span></button>
-      <p class="login-note">Reading is public. Editing requires administrator approval.</p>
+      <button class="btn block" id="discord-login" type="button">Continue with Discord →</button>
+      <p class="login-note">Reading is public. Editing requires approval.</p>
       <p id="login-message" class="status" role="status" hidden></p>`;
+
     $("#discord-login").addEventListener("click", startLogin);
     return;
   }
 
   summary.textContent = currentUser.username || "Account";
+
   const roleLabel = currentUser.role === "admin"
     ? "Administrator"
-    : currentUser.role === "editor" ? "Approved editor" : "Read-only account";
+    : currentUser.role === "editor"
+      ? "Approved editor"
+      : currentUser.role === "reader"
+        ? "Reader"
+        : "Read-only account";
 
   popover.innerHTML = `
     <h2>${escapeHtml(currentUser.username || "Discord account")}</h2>
@@ -406,8 +479,14 @@ function updateHeader() {
 
   $("#popover-logout").addEventListener("click", logout);
   $("#refresh-session").addEventListener("click", refreshUser);
-  if (isAdmin()) $("#open-admin").addEventListener("click", showAdmin);
-  if (canEdit()) $("#create-page").addEventListener("click", () => openEditor());
+
+  if (isAdmin()) {
+    $("#open-admin").addEventListener("click", showAdmin);
+  }
+
+  if (canEdit()) {
+    $("#create-page").addEventListener("click", () => openEditor());
+  }
 }
 
 function startLogin() {
@@ -417,9 +496,9 @@ function startLogin() {
 async function finishLogin() {
   const params = new URLSearchParams(location.search);
   const code = params.get("auth_code");
+
   if (!code) return;
 
-  // Remove the one-use code from the visible URL immediately.
   history.replaceState(null, "", location.pathname + location.hash);
   accountMenu.open = true;
   showLoginMessage("Completing Discord sign-in…");
@@ -433,7 +512,6 @@ async function finishLogin() {
     saveSession(result.token, result.user);
     showToast("Signed in with Discord.");
     accountMenu.open = false;
-    await loadArticles();
   } catch (error) {
     showLoginMessage("Sign-in failed: " + error.message);
   }
@@ -447,7 +525,7 @@ async function refreshUser() {
     updateHeader();
     showToast("Account status refreshed.");
     await loadArticles();
-  } catch (error) {
+  } catch {
     clearSession();
     showToast("Session expired. Please sign in again.");
   }
@@ -471,6 +549,7 @@ async function logout() {
 async function restoreSession() {
   try {
     const saved = sessionStorage.getItem(USER_KEY);
+
     if (!getToken() || !saved) {
       clearSession();
       return;
@@ -482,19 +561,23 @@ async function restoreSession() {
   } catch {
     clearSession();
   }
+
   updateHeader();
 }
 
 async function loadArticles() {
   const container = $("#article-list");
   const message = $("#articles-message");
+
   container.innerHTML = '<p class="muted">Loading articles…</p>';
   message.hidden = true;
 
   try {
     const result = await api("/api/pages");
     const pages = result.pages || [];
-    $("#article-count").textContent = `${pages.length} ARTICLE${pages.length === 1 ? "" : "S"}`;
+
+    $("#article-count").textContent =
+      `${pages.length} ARTICLE${pages.length === 1 ? "" : "S"}`;
 
     if (!pages.length) {
       container.innerHTML = '<p class="muted">No articles have been published yet.</p>';
@@ -504,8 +587,9 @@ async function loadArticles() {
     container.innerHTML = pages.map(page => `
       <a class="article-card" href="#page/${encodeURIComponent(page.slug)}" data-page="${escapeHtml(page.slug)}">
         <h3>${escapeHtml(page.title)}</h3>
-        <p>Updated ${new Date(Number(page.updated_at) * 1000).toLocaleDateString()}</p>
-      </a>`).join("");
+        <p>Updated ${formatDate(page.updated_at)}</p>
+      </a>
+    `).join("");
 
     container.querySelectorAll("[data-page]").forEach(link => {
       link.addEventListener("click", event => {
@@ -520,15 +604,23 @@ async function loadArticles() {
   }
 }
 
+function formatDate(value) {
+  const number = Number(value);
+  const date = Number.isFinite(number)
+    ? new Date(number < 100000000000 ? number * 1000 : number)
+    : new Date(value);
+
+  return Number.isNaN(date.getTime()) ? "an unknown date" : date.toLocaleDateString();
+}
+
 async function openArticle(slug) {
   try {
     const result = await api("/api/pages/" + encodeURIComponent(slug));
     const page = result.page;
-    currentPage = page;
 
+    currentPage = page;
     $("#article-title").textContent = page.title;
-    $("#article-meta").textContent =
-      "Last updated " + new Date(Number(page.updated_at) * 1000).toLocaleString();
+    $("#article-meta").textContent = "Last updated " + formatDate(page.updated_at);
     $("#article-content").textContent = page.content;
     $("#article-edit-actions").hidden = !canEdit();
 
@@ -552,8 +644,10 @@ function openEditor(page = null) {
   $("#page-title").value = page?.title || "";
   $("#page-slug").value = page?.slug || "";
   $("#page-slug").readOnly = Boolean(page);
+  $("#page-slug").dataset.touched = page ? "true" : "false";
   $("#page-content").value = page?.content || "";
   $("#editor-message").hidden = true;
+
   showView("editor-view");
   document.title = (page ? "Edit article" : "Create article") + " · RBWR Wiki";
 }
@@ -597,116 +691,302 @@ $("#article-form").addEventListener("submit", async event => {
   }
 });
 
+// Account management.
+
+function roleName(role) {
+  return ({
+    admin: "Administrator",
+    editor: "Editor",
+    reader: "Reader",
+    pending: "Pending"
+  })[role] || role;
+}
+
+function roleOptions(selected) {
+  const roles = [
+    ["reader", "Reader"],
+    ["editor", "Editor"],
+    ["admin", "Administrator"],
+    ["pending", "Pending"]
+  ];
+
+  return roles.map(([value, label]) =>
+    `<option value="${value}" ${value === selected ? "selected" : ""}>${label}</option>`
+  ).join("");
+}
+
+async function addAccount(event) {
+  event.preventDefault();
+
+  if (!isAdmin()) {
+    showToast("Administrator access is required.");
+    return;
+  }
+
+  const idInput = $("#new-discord-id");
+  const roleInput = $("#new-user-role");
+  const message = $("#add-user-message");
+  const button = $("#add-user-button");
+
+  const discordId = idInput.value.trim();
+  const role = roleInput.value;
+
+  message.hidden = true;
+
+  if (!/^[0-9]{17,20}$/.test(discordId)) {
+    message.hidden = false;
+    message.textContent = "Enter a valid Discord User ID containing 17–20 digits.";
+    return;
+  }
+
+  if (!["reader", "editor", "admin"].includes(role)) {
+    message.hidden = false;
+    message.textContent = "Choose Reader, Editor or Administrator.";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Adding…";
+
+  try {
+    await api("/api/admin/users", {
+      method: "POST",
+      body: JSON.stringify({
+        discord_id: discordId,
+        role
+      })
+    });
+
+    idInput.value = "";
+    roleInput.value = "editor";
+    message.hidden = false;
+    message.classList.add("ok");
+    message.textContent = `Account added with role: ${roleName(role)}.`;
+
+    showToast("Account permissions saved.");
+    await loadUsers();
+  } catch (error) {
+    message.hidden = false;
+    message.classList.remove("ok");
+    message.textContent = error.message;
+  } finally {
+    button.disabled = false;
+    button.textContent = "Add account";
+  }
+}
+
 async function loadUsers() {
   const body = $("#users-body");
   const message = $("#users-message");
+
   body.innerHTML = '<tr><td colspan="4" class="empty">Loading accounts…</td></tr>';
   message.hidden = true;
 
   try {
     const result = await api("/api/admin/users");
-    const filter = $("#user-search").value.trim().toLowerCase();
-    const users = (result.users || []).filter(user =>
-      [user.username, user.discord_id, user.role].join(" ").toLowerCase().includes(filter)
-    );
-
-    $("#account-count").textContent = `(${result.users.length})`;
-
-    if (!users.length) {
-      body.innerHTML = '<tr><td colspan="4" class="empty">No matching accounts.</td></tr>';
-      return;
-    }
-
-    body.innerHTML = users.map(user => {
-      const role = user.role;
-      const roleLabel = role === "admin" ? "Administrator"
-        : role === "editor" ? "Editor" : "Read-only";
-
-      let actions = '<span class="muted">Protected</span>';
-      if (role !== "admin") {
-        actions = role === "editor"
-          ? `<button class="small-btn remove" data-action="revoke" data-id="${escapeHtml(user.discord_id)}">Revoke editor</button>`
-          : `<button class="small-btn" data-action="approve" data-id="${escapeHtml(user.discord_id)}">Approve editor</button>`;
-      }
-
-      return `<tr>
-        <td><strong>${escapeHtml(user.username)}</strong></td>
-        <td><code>${escapeHtml(user.discord_id)}</code></td>
-        <td><span class="role ${role === "admin" ? "admin" : role === "editor" ? "editor" : ""}">${escapeHtml(roleLabel)}</span></td>
-        <td><div class="row-actions">${actions}</div></td>
-      </tr>`;
-    }).join("");
+    usersCache = result.users || [];
+    renderUsers();
   } catch (error) {
     body.innerHTML = '<tr><td colspan="4" class="empty">Could not load accounts.</td></tr>';
     message.hidden = false;
+    message.classList.remove("ok");
     message.textContent = error.message;
   }
 }
 
-$("#users-body").addEventListener("click", async event => {
-  const button = event.target.closest("button[data-action]");
-  if (!button || !isAdmin()) return;
+function renderUsers() {
+  const body = $("#users-body");
+  const filter = $("#user-search").value.trim().toLowerCase();
 
-  const id = button.dataset.id;
-  const action = button.dataset.action;
-  const approve = action === "approve";
+  const users = usersCache.filter(user =>
+    [user.username, user.discord_id, user.role]
+      .join(" ")
+      .toLowerCase()
+      .includes(filter)
+  );
 
-  if (!confirm(`${approve ? "Approve" : "Revoke editing access for"} Discord account ${id}?`)) return;
+  $("#account-count").textContent = `(${usersCache.length})`;
+
+  if (!users.length) {
+    body.innerHTML = '<tr><td colspan="4" class="empty">No matching accounts.</td></tr>';
+    return;
+  }
+
+  body.innerHTML = users.map(user => {
+    const isSelf = user.discord_id === currentUser?.id;
+    const isProtectedSelf = isSelf && currentUser?.role === "admin";
+
+    const roleClass = user.role === "admin"
+      ? "admin"
+      : user.role === "editor"
+        ? "editor"
+        : user.role === "reader"
+          ? "reader"
+          : "";
+
+    const accountName = escapeHtml(user.username || "Discord user");
+    const id = escapeHtml(user.discord_id);
+
+    let controls;
+
+    if (isProtectedSelf) {
+      controls = '<span class="muted">Your account</span>';
+    } else {
+      controls = `
+        <div class="row-actions">
+          <select class="field role-select" aria-label="Role for ${accountName}" data-role-id="${id}">
+            ${roleOptions(user.role)}
+          </select>
+          <button class="small-btn" type="button" data-save-role="${id}">Save</button>
+        </div>`;
+    }
+
+    return `
+      <tr>
+        <td>
+          <strong>${accountName}</strong>
+          ${isProtectedSelf ? '<div><span class="role owner">Your account</span></div>' : ""}
+        </td>
+        <td><code>${id}</code></td>
+        <td><span class="role ${roleClass}">${escapeHtml(roleName(user.role))}</span></td>
+        <td>${controls}</td>
+      </tr>`;
+  }).join("");
+}
+
+async function changeRole(button) {
+  if (!isAdmin()) {
+    showToast("Administrator access is required.");
+    return;
+  }
+
+  const id = button.dataset.saveRole;
+  const select = document.querySelector(`[data-role-id="${CSS.escape(id)}"]`);
+
+  if (!select) return;
+
+  const role = select.value;
+
+  if (!["reader", "editor", "admin", "pending"].includes(role)) {
+    showToast("Invalid role selected.");
+    return;
+  }
+
+  const target = usersCache.find(user => user.discord_id === id);
+
+  if (!target) {
+    showToast("Account not found. Refresh the list.");
+    return;
+  }
+
+  if (target.discord_id === currentUser?.id) {
+    showToast("You cannot change your own role here.");
+    return;
+  }
+
+  if (target.role === role) {
+    showToast("No change to save.");
+    return;
+  }
+
+  const confirmation = role === "admin"
+    ? `Grant administrator access to Discord ID ${id}? They will be able to manage accounts.`
+    : role === "pending"
+      ? `Revoke editing and administrative access for Discord ID ${id}?`
+      : `Change Discord ID ${id} to ${roleName(role)}?`;
+
+  if (!confirm(confirmation)) return;
 
   button.disabled = true;
+  button.textContent = "Saving…";
+
   try {
-    await api(`/api/admin/users/${encodeURIComponent(id)}/${action}`, { method: "POST" });
-    showToast(approve ? "Editor approved." : "Editing access revoked.");
+    await api(`/api/admin/users/${encodeURIComponent(id)}/role`, {
+      method: "POST",
+      body: JSON.stringify({ role })
+    });
+
+    showToast(`Account role updated to ${roleName(role)}.`);
     await loadUsers();
   } catch (error) {
-    showToast("Permission change failed: " + error.message);
+    showToast("Role change failed: " + error.message);
     button.disabled = false;
+    button.textContent = "Save";
   }
+}
+
+$("#add-user-form").addEventListener("submit", addAccount);
+
+$("#users-body").addEventListener("click", event => {
+  const button = event.target.closest("button[data-save-role]");
+  if (button) changeRole(button);
 });
 
 $("#discord-login").addEventListener("click", startLogin);
+
 $("#brand-home").addEventListener("click", event => {
   event.preventDefault();
   showHome();
 });
+
 $("#nav-wiki").addEventListener("click", () => showHome());
+
 $("#nav-about").addEventListener("click", () => {
   showHome();
   $("#about").classList.toggle("visible");
   $("#about").scrollIntoView({ behavior: "smooth", block: "nearest" });
 });
-$("#about-link").addEventListener("click", () => $("#about").classList.add("visible"));
-document.querySelectorAll("[data-section]").forEach(link => link.addEventListener("click", event => {
-  event.preventDefault();
-  showToast("No article has been assigned to this section yet.");
-}));
+
+$("#about-link").addEventListener("click", () => {
+  $("#about").classList.add("visible");
+});
+
+document.querySelectorAll("[data-section]").forEach(link => {
+  link.addEventListener("click", event => {
+    event.preventDefault();
+    showToast("No article has been assigned to this section yet.");
+  });
+});
+
 $("#back-home").addEventListener("click", showHome);
+
 $("#article-back").addEventListener("click", async () => {
   showHome();
   await loadArticles();
 });
+
 $("#editor-cancel").addEventListener("click", () => {
   if (currentPage) openArticle(currentPage.slug);
   else showHome();
 });
+
 $("#cancel-page").addEventListener("click", () => {
   if (currentPage) openArticle(currentPage.slug);
   else showHome();
 });
+
 $("#edit-article-button").addEventListener("click", () => openEditor(currentPage));
 $("#admin-logout").addEventListener("click", logout);
 $("#admin-refresh").addEventListener("click", loadUsers);
-$("#user-search").addEventListener("input", loadUsers);
+
+$("#user-search").addEventListener("input", renderUsers);
 
 document.addEventListener("click", event => {
-  if (accountMenu.open && !accountMenu.contains(event.target)) accountMenu.open = false;
+  if (accountMenu.open && !accountMenu.contains(event.target)) {
+    accountMenu.open = false;
+  }
 });
+
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") accountMenu.open = false;
 });
 
 $("#page-title").addEventListener("input", () => {
-  if ($("#page-slug").readOnly || $("#page-slug").dataset.touched === "true") return;
+  if (
+    $("#page-slug").readOnly ||
+    $("#page-slug").dataset.touched === "true"
+  ) return;
+
   $("#page-slug").value = $("#page-title").value
     .toLowerCase()
     .normalize("NFKD")
@@ -715,6 +995,7 @@ $("#page-title").addEventListener("input", () => {
     .replace(/^-|-$/g, "")
     .slice(0, 100);
 });
+
 $("#page-slug").addEventListener("input", () => {
   $("#page-slug").dataset.touched = "true";
 });
@@ -725,8 +1006,8 @@ async function init() {
   await finishLogin();
   await loadArticles();
 
-  // Support reloading a directly opened article link.
   const match = location.hash.match(/^#page\/(.+)$/);
+
   if (match) {
     try {
       await openArticle(decodeURIComponent(match[1]));
