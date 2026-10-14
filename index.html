@@ -1,36 +1,740 @@
+
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f7f8f6">
-<meta name="description" content="A community-maintained technical reference for Roblox Realistic Boiling Water Reactor."><title>RBWR Wiki</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f8f6">
+<meta name="description" content="A community-maintained technical reference for Roblox Realistic Boiling Water Reactor.">
+<title>RBWR Wiki</title>
 <style>
-:root{color-scheme:light;--bg:#f7f8f6;--paper:#fff;--ink:#202a2d;--muted:#667276;--line:#dce2df;--accent:#427a78;--accent-dark:#315e5c;--soft:#eaf1ef;--danger:#a34242}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button,input,select{font:inherit}button,a{touch-action:manipulation}.wrap{width:min(1050px,calc(100% - 48px));margin-inline:auto}.topbar{border-bottom:1px solid var(--line);background:rgba(247,248,246,.96)}.topinner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{font-size:18px;font-weight:750;letter-spacing:-.04em;display:flex;align-items:center;gap:10px}.mark{width:29px;height:29px;display:grid;place-items:center;border:1.5px solid var(--accent);color:var(--accent);font-size:10px;font-weight:850;letter-spacing:-.07em}.nav{display:flex;align-items:center;gap:28px;color:var(--muted);font-size:13px}.nav button,.nav a{cursor:pointer;background:none;border:0;padding:5px 0;color:inherit}.nav a:hover,.nav button:hover{color:var(--accent-dark)}.account{position:relative}.account summary{list-style:none;cursor:pointer;padding:6px 2px;color:var(--muted);user-select:none}.account summary::-webkit-details-marker{display:none}.account summary::after{content:"⌄";font-size:12px;margin-left:6px;color:#899295}.account[open] summary::after{content:"⌃"}.login-popover{position:absolute;right:0;top:calc(100% + 12px);z-index:10;width:min(300px,calc(100vw - 36px));padding:20px;background:var(--paper);border:1px solid var(--line);box-shadow:0 12px 30px #1a2b2b17;border-radius:4px;color:var(--ink)}h1,h2,h3,p{margin-top:0}.login-popover h2{font-size:16px;margin:0 0 3px;font-weight:650}.hint,.muted{color:var(--muted)}.hint{font-size:12px;margin:0 0 16px}.field-label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px}.field{width:100%;border:1px solid var(--line);border-radius:3px;background:#fff;padding:10px 11px;font-size:13px;color:var(--ink);outline:none}.field:focus{border-color:var(--accent);box-shadow:0 0 0 2px #427a781f}.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid transparent;border-radius:3px;background:var(--accent);color:white;padding:10px 14px;font-size:13px;font-weight:650;cursor:pointer}.btn:hover{background:var(--accent-dark)}.btn.block{width:100%;margin-top:15px}.btn.secondary{background:var(--paper);border-color:var(--line);color:var(--ink)}.btn.secondary:hover{background:var(--soft)}.btn.danger{background:white;color:var(--danger);border-color:#e7caca}.btn.danger:hover{background:#fff5f5}.login-note{font-size:11px;color:#899295;line-height:1.5;margin:12px 0 0}.status{font-size:12px;margin:10px 0 0;color:var(--danger)}.status.ok{color:var(--accent-dark)}.hero{padding:clamp(92px,14vw,158px) 0 104px;text-align:center}.kicker{color:var(--accent);font-size:11px;font-weight:750;letter-spacing:.15em;text-transform:uppercase;margin:0 0 18px}.hero h1{font-size:clamp(42px,7vw,72px);line-height:1.04;letter-spacing:-.065em;font-weight:650;margin:0 auto 22px}.hero p.lead{max-width:540px;margin:0 auto;color:var(--muted);font-size:17px;line-height:1.75}.actions{display:flex;justify-content:center;align-items:center;gap:22px;margin-top:34px;flex-wrap:wrap}.primary{display:inline-flex;align-items:center;gap:12px;background:var(--accent);color:white;padding:12px 18px;font-size:13px;font-weight:650;border-radius:3px}.primary:hover{background:var(--accent-dark)}.textlink{font-size:13px;color:var(--muted)}.textlink:hover{color:var(--accent-dark)}.arrow{font-size:17px;line-height:1}.divider{height:1px;background:var(--line)}.explore{padding:35px 0 54px}.explorehead{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.explorehead h2{font-size:13px;letter-spacing:.02em;font-weight:700;margin:0}.explorehead span{font-size:11px;color:#899295}.links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}.topic{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:transparent;transition:background .15s,color .15s}.topic:hover{background:var(--paper);color:var(--accent-dark)}.topic span:first-child{font-size:14px;font-weight:570}.topic .arrow{color:#8b9697}.about{display:none;padding:20px 0 44px;max-width:660px;color:var(--muted);font-size:14px}.about.visible{display:block}.about h2{color:var(--ink);font-size:19px;letter-spacing:-.03em}.footer{border-top:1px solid var(--line);padding:22px 0;color:#788386;font-size:11px}.footinner{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.footinner strong{color:#4d5a5d;font-weight:650}
-/* Integrated admin view */
-#admin-view{display:none;padding:46px 0 76px}#admin-view.visible{display:block}#home-view.hidden{display:none}.admin-head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:30px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);font-weight:750;margin-bottom:8px}.admin-head h1{font-size:clamp(30px,4vw,42px);line-height:1.15;letter-spacing:-.05em;margin:0 0 9px}.admin-head p{color:var(--muted);font-size:14px;margin:0}.demo-banner{background:#f4f0e4;border:1px solid #e7dcc0;padding:11px 14px;font-size:12px;color:#735f2d;margin-bottom:22px}.admin-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;align-items:start}.panel{background:var(--paper);border:1px solid var(--line)}.panel-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-head h2{font-size:14px;margin:0;font-weight:700}.panel-body{padding:20px}.search{max-width:230px}.user-table{width:100%;border-collapse:collapse;font-size:13px}.user-table th{text-align:left;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.05em;background:#fafbf9}.user-table th,.user-table td{padding:12px 15px;border-bottom:1px solid var(--line);vertical-align:middle}.user-table tr:last-child td{border-bottom:0}.role{display:inline-block;border:1px solid var(--line);padding:3px 7px;border-radius:2px;font-size:11px;color:var(--muted)}.role.admin{background:var(--soft);border-color:#cbded9;color:var(--accent-dark)}.row-actions{display:flex;gap:7px;align-items:center}.small-btn{background:white;border:1px solid var(--line);border-radius:3px;padding:5px 8px;font-size:11px;cursor:pointer;color:var(--ink)}.small-btn:hover{background:var(--soft)}.small-btn.remove{color:var(--danger)}.empty{padding:24px;text-align:center;color:var(--muted);font-size:13px}.form-title{font-size:15px;margin:0 0 4px}.form-desc{font-size:12px;color:var(--muted);margin:0 0 17px}.form-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.statline{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:11px 0;font-size:13px}.statline:last-child{border-bottom:0}.statline span{color:var(--muted)}.admin-footer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.toast{position:fixed;bottom:20px;right:20px;background:#233a38;color:white;padding:12px 16px;font-size:13px;box-shadow:0 8px 24px #0002;z-index:20;display:none}.toast.show{display:block}
-@media(max-width:760px){.admin-grid{grid-template-columns:1fr}.admin-head{flex-direction:column}.user-table th:nth-child(2),.user-table td:nth-child(2){display:none}.panel-head{align-items:flex-start;flex-direction:column}.search{max-width:none;width:100%}}@media(max-width:650px){.wrap{width:calc(100% - 36px)}.topinner{height:64px}.nav{gap:17px}.nav .about-nav{display:none}.hero{padding:94px 0 78px}.hero p.lead{font-size:15px}.links{grid-template-columns:1fr}.topic{min-height:66px;padding:16px 17px}.explore{padding-top:27px}.footinner{flex-direction:column;gap:4px}#admin-view{padding-top:32px}.user-table th,.user-table td{padding:10px 8px}.admin-head .btn{width:100%}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
-</style></head>
+:root {
+  color-scheme:light;
+  --bg:#f7f8f6;--paper:#fff;--ink:#202a2d;--muted:#667276;
+  --line:#dce2df;--accent:#427a78;--accent-dark:#315e5c;
+  --soft:#eaf1ef;--danger:#a34242;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit}
+button,a{touch-action:manipulation}
+button{cursor:pointer}
+.wrap{width:min(1050px,calc(100% - 48px));margin-inline:auto}
+.topbar{border-bottom:1px solid var(--line);background:rgba(247,248,246,.96)}
+.topinner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{font-size:18px;font-weight:750;letter-spacing:-.04em;display:flex;align-items:center;gap:10px}
+.mark{width:29px;height:29px;display:grid;place-items:center;border:1.5px solid var(--accent);color:var(--accent);font-size:10px;font-weight:850;letter-spacing:-.07em}
+.nav{display:flex;align-items:center;gap:24px;color:var(--muted);font-size:13px}
+.nav button,.nav>a{background:none;border:0;padding:5px 0;color:inherit}
+.nav a:hover,.nav button:hover{color:var(--accent-dark)}
+.account{position:relative}
+.account summary{list-style:none;cursor:pointer;padding:6px 2px;color:var(--muted);user-select:none}
+.account summary::-webkit-details-marker{display:none}
+.account summary::after{content:"⌄";font-size:12px;margin-left:6px;color:#899295}
+.account[open] summary::after{content:"⌃"}
+.login-popover{position:absolute;right:0;top:calc(100% + 12px);z-index:10;width:min(320px,calc(100vw - 36px));padding:20px;background:var(--paper);border:1px solid var(--line);box-shadow:0 12px 30px #1a2b2b17;border-radius:4px;color:var(--ink)}
+h1,h2,h3,p{margin-top:0}
+.login-popover h2{font-size:16px;margin:0 0 3px;font-weight:650}
+.hint,.muted{color:var(--muted)}
+.hint{font-size:12px;margin:0 0 16px}
+.field-label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px}
+.field{width:100%;border:1px solid var(--line);border-radius:3px;background:white;padding:10px 11px;font-size:13px;color:var(--ink);outline:none}
+.field:focus{border-color:var(--accent);box-shadow:0 0 0 2px #427a781f}
+textarea.field{min-height:220px;resize:vertical;font:13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}
+.btn,.primary{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid transparent;border-radius:3px;background:var(--accent);color:white;padding:10px 14px;font-size:13px;font-weight:650}
+.btn:hover,.primary:hover{background:var(--accent-dark)}
+.btn.block{width:100%;margin-top:12px}
+.btn.secondary{background:white;border-color:var(--line);color:var(--ink)}
+.btn.secondary:hover{background:var(--soft)}
+.btn.danger{background:white;color:var(--danger);border-color:#e7caca}
+.btn.danger:hover{background:#fff5f5}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.login-note{font-size:11px;color:#899295;line-height:1.5;margin:12px 0 0}
+.status{font-size:12px;margin:10px 0 0;color:var(--danger);overflow-wrap:anywhere}
+.status.ok{color:var(--accent-dark)}
+.hero{padding:clamp(92px,14vw,158px) 0 104px;text-align:center}
+.kicker{color:var(--accent);font-size:11px;font-weight:750;letter-spacing:.15em;text-transform:uppercase;margin:0 0 18px}
+.hero h1{font-size:clamp(42px,7vw,72px);line-height:1.04;letter-spacing:-.065em;font-weight:650;margin:0 auto 22px}
+.lead{max-width:540px;margin:0 auto;color:var(--muted);font-size:17px;line-height:1.75}
+.actions{display:flex;justify-content:center;align-items:center;gap:22px;margin-top:34px;flex-wrap:wrap}
+.primary{padding:12px 18px}
+.textlink{font-size:13px;color:var(--muted)}
+.textlink:hover{color:var(--accent-dark)}
+.arrow{font-size:17px;line-height:1}
+.divider{height:1px;background:var(--line)}
+.explore{padding:35px 0 54px}
+.explorehead{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.explorehead h2{font-size:13px;letter-spacing:.02em;font-weight:700;margin:0}
+.explorehead span{font-size:11px;color:#899295}
+.links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.topic{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .15s,color .15s}
+.topic:hover{background:white;color:var(--accent-dark)}
+.topic span:first-child{font-size:14px;font-weight:570}
+.topic .arrow{color:#8b9697}
+.about{display:none;padding:20px 0 44px;max-width:660px;color:var(--muted);font-size:14px}
+.about.visible{display:block}
+.about h2{color:var(--ink);font-size:19px;letter-spacing:-.03em}
+.footer{border-top:1px solid var(--line);padding:22px 0;color:#788386;font-size:11px}
+.footinner{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.footinner strong{color:#4d5a5d;font-weight:650}
+.view{display:none;padding:46px 0 76px}
+.view.visible{display:block}
+.admin-head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:30px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);font-weight:750;margin-bottom:8px}
+.admin-head h1{font-size:clamp(30px,4vw,42px);line-height:1.15;letter-spacing:-.05em;margin:0 0 9px}
+.admin-head p{color:var(--muted);font-size:14px;margin:0}
+.admin-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;align-items:start}
+.panel{background:white;border:1px solid var(--line);min-width:0}
+.panel+.panel{margin-top:22px}
+.panel-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.panel-head h2{font-size:14px;margin:0;font-weight:700}
+.panel-body{padding:20px}
+.search{max-width:230px}
+.user-table{width:100%;border-collapse:collapse;font-size:13px}
+.user-table th{text-align:left;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.05em;background:#fafbf9}
+.user-table th,.user-table td{padding:12px 15px;border-bottom:1px solid var(--line);vertical-align:middle}
+.user-table tr:last-child td{border-bottom:0}
+.table-wrap{overflow-x:auto}
+.role{display:inline-block;border:1px solid var(--line);padding:3px 7px;border-radius:2px;font-size:11px;color:var(--muted);white-space:nowrap}
+.role.admin{background:var(--soft);border-color:#cbded9;color:var(--accent-dark)}
+.role.editor{color:var(--accent-dark);border-color:#cbded9}
+.row-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.small-btn{background:white;border:1px solid var(--line);border-radius:3px;padding:5px 8px;font-size:11px;color:var(--ink)}
+.small-btn:hover{background:var(--soft)}
+.small-btn.remove{color:var(--danger)}
+.empty{padding:24px;text-align:center;color:var(--muted);font-size:13px}
+.form-title{font-size:15px;margin:0 0 4px}
+.form-desc{font-size:12px;color:var(--muted);margin:0 0 17px}
+.form-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.statline{display:flex;justify-content:space-between;gap:18px;border-bottom:1px solid var(--line);padding:11px 0;font-size:13px}
+.statline:last-child{border-bottom:0}
+.statline span{color:var(--muted);text-align:right}
+.admin-footer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.toast{position:fixed;bottom:20px;right:20px;max-width:min(440px,calc(100vw - 40px));background:#233a38;color:white;padding:12px 16px;font-size:13px;box-shadow:0 8px 24px #0002;z-index:20;display:none}
+.toast.show{display:block}
+.article-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.article-card{display:block;background:white;border:1px solid var(--line);padding:18px}
+.article-card:hover{border-color:#aac5bf}
+.article-card h3{font-size:15px;margin:0 0 6px}
+.article-card p{font-size:12px;color:var(--muted);margin:0}
+.article-content{background:white;border:1px solid var(--line);padding:clamp(20px,4vw,38px);overflow-wrap:anywhere}
+.article-content h1{font-size:clamp(28px,5vw,42px);letter-spacing:-.05em;line-height:1.15}
+.article-text{white-space:pre-wrap;font-size:15px;line-height:1.8}
+.notice{background:var(--soft);border:1px solid var(--line);padding:13px 15px;font-size:13px;margin-bottom:18px}
+@media(max-width:760px){
+ .admin-grid{grid-template-columns:1fr}
+ .admin-head{flex-direction:column}
+ .panel-head{align-items:flex-start;flex-direction:column}
+ .search{max-width:none;width:100%}
+ .article-list{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+ .wrap{width:calc(100% - 36px)}
+ .topinner{min-height:64px}
+ .nav{gap:14px}
+ .nav .about-nav{display:none}
+ .hero{padding:94px 0 78px}
+ .lead{font-size:15px}
+ .links{grid-template-columns:1fr}
+ .topic{min-height:66px;padding:16px 17px}
+ .explore{padding-top:27px}
+ .footinner{flex-direction:column;gap:4px}
+ .view{padding-top:32px}
+ .user-table th,.user-table td{padding:10px 8px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
 <body id="top">
-<header class="topbar"><div class="wrap topinner"><a class="brand" href="#home" id="brand-home" aria-label="RBWR Wiki home"><span class="mark">RBWR</span><span>RBWR Wiki</span></a><nav class="nav" aria-label="Main navigation"><a href="#browse" id="nav-wiki">Wiki</a><button type="button" id="nav-about" class="about-nav">About</button><details class="account" id="account-menu"><summary id="account-summary">Log in</summary><div class="login-popover" id="login-popover"><h2>Contributor access</h2><p class="hint">Sign in to manage wiki content</p><form id="demo-login-form"><label class="field-label" for="demo-user">Username</label><input class="field" id="demo-user" name="username" autocomplete="username" required><label class="field-label" for="demo-password">Password</label><input class="field" id="demo-password" name="password" type="password" autocomplete="current-password" required><button class="btn block" type="submit">Log in <span aria-hidden="true">→</span></button></form><p class="login-note">Reading is public. Accounts are created by the administrator.</p><p id="login-message" class="status" role="status" hidden></p></div></details></nav></div></header>
+<header class="topbar">
+ <div class="wrap topinner">
+  <a class="brand" href="#home" id="brand-home" aria-label="RBWR Wiki home">
+   <span class="mark">RBWR</span><span>RBWR Wiki</span>
+  </a>
+  <nav class="nav" aria-label="Main navigation">
+   <a href="#browse" id="nav-wiki">Wiki</a>
+   <button type="button" id="nav-about" class="about-nav">About</button>
+   <details class="account" id="account-menu">
+    <summary id="account-summary">Log in</summary>
+    <div class="login-popover" id="login-popover">
+     <h2>Contributor access</h2>
+     <p class="hint">Sign in with your Discord account</p>
+     <button class="btn block" id="discord-login" type="button">Continue with Discord <span aria-hidden="true">→</span></button>
+     <p class="login-note">Reading is public. Editing requires administrator approval.</p>
+     <p id="login-message" class="status" role="status" hidden></p>
+    </div>
+   </details>
+  </nav>
+ </div>
+</header>
+
 <main>
-<div id="home-view"><section class="hero wrap"><p class="kicker">Roblox Realistic Boiling Water Reactor</p><h1>RBWR Wiki</h1><p class="lead">A community-maintained technical reference for the RBWR simulator.</p><div class="actions"><a class="primary" href="#browse">Browse the wiki <span class="arrow" aria-hidden="true">→</span></a><a class="textlink" href="#about" id="about-link">About this project</a></div></section><div class="divider"></div><section class="wrap explore" id="browse"><div class="explorehead"><h2>Explore</h2><span>WIKI SECTIONS</span></div><nav class="links" aria-label="Wiki sections"><a class="topic" href="#plant-systems" data-section="Plant systems"><span>Plant systems</span><span class="arrow" aria-hidden="true">↗</span></a><a class="topic" href="#operations" data-section="Operations"><span>Operations</span><span class="arrow" aria-hidden="true">↗</span></a><a class="topic" href="#simulator-guide" data-section="Simulator guide"><span>Simulator guide</span><span class="arrow" aria-hidden="true">↗</span></a></nav></section><section class="wrap about" id="about"><h2>About the wiki</h2><p>This is an independent, community-maintained reference for Roblox Realistic Boiling Water Reactor. Its aim is to make simulator information easier to find, understand, and maintain.</p></section></div>
-<section id="admin-view" class="wrap" aria-labelledby="admin-title"><div class="admin-head"><div><div class="eyebrow">Administration</div><h1 id="admin-title">Account management</h1><p>Manage who can contribute to the RBWR Wiki.</p></div><button class="btn secondary" id="back-home">← Back to homepage</button></div><div class="demo-banner"><strong>Prototype mode.</strong> This temporary <code>admin / 123</code> login is stored only in this browser session. Do not use it on a public deployment.</div><div class="admin-grid"><section class="panel"><div class="panel-head"><h2>Approved accounts <span id="account-count" class="muted">(1)</span></h2><input class="field search" id="user-search" type="search" placeholder="Search accounts…" aria-label="Search accounts"></div><div id="users-container"><table class="user-table"><thead><tr><th>Account</th><th>Roblox user ID</th><th>Role</th><th>Actions</th></tr></thead><tbody id="users-body"></tbody></table></div></section><aside class="panel"><div class="panel-head"><h2>Add contributor</h2></div><div class="panel-body"><h3 class="form-title">Approve an account</h3><p class="form-desc">Add an approved contributor to the local demo list.</p><form id="add-user-form"><label class="field-label" for="new-username">Username / display name</label><input class="field" id="new-username" required maxlength="60" placeholder="e.g. RBWRContributor"><label class="field-label" for="new-id">Roblox user ID <span class="muted">(optional for demo)</span></label><input class="field" id="new-id" inputmode="numeric" pattern="[0-9]*" maxlength="24" placeholder="e.g. 12345678"><label class="field-label" for="new-role">Permission</label><select class="field" id="new-role"><option value="editor">Editor — can contribute</option><option value="reader">Reader — no editing</option></select><div class="form-actions"><button class="btn" type="submit">Add account <span aria-hidden="true">+</span></button></div><p id="add-message" class="status" role="status" hidden></p></form></div></aside></div><div class="panel" style="margin-top:22px"><div class="panel-head"><h2>Access policy</h2></div><div class="panel-body"><div class="statline"><strong>Public visitors</strong><span>Read published pages</span></div><div class="statline"><strong>Editors</strong><span>Create and edit pages (planned)</span></div><div class="statline"><strong>Administrator</strong><span>Manage contributor accounts</span></div><div class="admin-footer-actions"><button class="btn secondary" id="export-users">Export account list (CSV)</button><button class="btn danger" id="logout-button">Log out</button></div></div></div></section>
-</main><footer class="footer"><div class="wrap footinner"><span><strong>RBWR Wiki</strong> · Community-maintained</span><span>Independent community project</span></div></footer><div class="toast" id="toast" role="status"></div>
+ <div id="home-view">
+  <section class="hero wrap">
+   <p class="kicker">Roblox Realistic Boiling Water Reactor</p>
+   <h1>RBWR Wiki</h1>
+   <p class="lead">A community-maintained technical reference for the RBWR simulator.</p>
+   <div class="actions">
+    <a class="primary" href="#browse">Browse the wiki <span class="arrow" aria-hidden="true">→</span></a>
+    <a class="textlink" href="#about" id="about-link">About this project</a>
+   </div>
+  </section>
+  <div class="divider"></div>
+  <section class="wrap explore" id="browse">
+   <div class="explorehead"><h2>Explore</h2><span>WIKI SECTIONS</span></div>
+   <nav class="links" aria-label="Wiki sections">
+    <a class="topic" href="#plant-systems" data-section="Plant systems"><span>Plant systems</span><span class="arrow">↗</span></a>
+    <a class="topic" href="#operations" data-section="Operations"><span>Operations</span><span class="arrow">↗</span></a>
+    <a class="topic" href="#simulator-guide" data-section="Simulator guide"><span>Simulator guide</span><span class="arrow">↗</span></a>
+   </nav>
+  </section>
+  <section class="wrap about" id="about">
+   <h2>About the wiki</h2>
+   <p>This is an independent, community-maintained reference for Roblox Realistic Boiling Water Reactor. Its aim is to make simulator information easier to find, understand, and maintain.</p>
+  </section>
+  <section class="wrap" style="padding:0 0 48px">
+   <div class="explorehead"><h2>Recently available articles</h2><span id="article-count">LOADING</span></div>
+   <div id="article-list" class="article-list"><p class="muted">Loading articles…</p></div>
+   <p id="articles-message" class="status" role="status" hidden></p>
+  </section>
+ </div>
+
+ <section id="article-view" class="view wrap">
+  <div class="admin-head">
+   <div><div class="eyebrow">Wiki article</div><h1 id="article-title">Article</h1><p id="article-meta"></p></div>
+   <button class="btn secondary" id="article-back">← Back to wiki</button>
+  </div>
+  <article class="article-content"><div id="article-content" class="article-text"></div></article>
+  <div id="article-edit-actions" class="admin-footer-actions" hidden>
+   <button class="btn" id="edit-article-button">Edit article</button>
+  </div>
+ </section>
+
+ <section id="editor-view" class="view wrap">
+  <div class="admin-head">
+   <div><div class="eyebrow">Content management</div><h1 id="editor-heading">Create article</h1><p>Write and maintain technical reference pages.</p></div>
+   <button class="btn secondary" id="editor-cancel">← Cancel</button>
+  </div>
+  <div class="panel"><div class="panel-body">
+   <form id="article-form">
+    <label class="field-label" for="page-title">Article title</label>
+    <input class="field" id="page-title" maxlength="200" required placeholder="e.g. Reactor protection system">
+    <label class="field-label" for="page-slug">Page address (slug)</label>
+    <input class="field" id="page-slug" maxlength="100" pattern="[a-z0-9]+(-[a-z0-9]+)*" required placeholder="reactor-protection-system">
+    <p class="login-note">Use lowercase letters, numbers and hyphens. Existing page addresses cannot be changed while editing.</p>
+    <label class="field-label" for="page-content">Article content</label>
+    <textarea class="field" id="page-content" required maxlength="500000" placeholder="Write the article here…"></textarea>
+    <p class="login-note">This initial editor saves plain text. Markdown formatting is not rendered yet.</p>
+    <div class="form-actions"><button class="btn" id="save-page" type="submit">Save article</button><button class="btn secondary" id="cancel-page" type="button">Cancel</button></div>
+    <p id="editor-message" class="status" role="status" hidden></p>
+   </form>
+  </div></div>
+ </section>
+
+ <section id="admin-view" class="view wrap">
+  <div class="admin-head">
+   <div><div class="eyebrow">Administration</div><h1>Account management</h1><p>Manage who can contribute to the RBWR Wiki.</p></div>
+   <button class="btn secondary" id="back-home">← Back to homepage</button>
+  </div>
+  <div class="notice"><strong>Administrator controls.</strong> Only the Discord account configured as the administrator in the Worker can approve or revoke editors. Newly registered accounts start with read-only access.</div>
+  <div class="admin-grid">
+   <section class="panel">
+    <div class="panel-head"><h2>Registered accounts <span id="account-count" class="muted"></span></h2><input class="field search" id="user-search" type="search" placeholder="Search accounts…" aria-label="Search accounts"></div>
+    <div class="table-wrap" id="users-container"><table class="user-table"><thead><tr><th>Discord account</th><th>Discord ID</th><th>Role</th><th>Actions</th></tr></thead><tbody id="users-body"><tr><td colspan="4" class="empty">Loading accounts…</td></tr></tbody></table></div>
+    <p id="users-message" class="status" role="status" hidden></p>
+   </section>
+   <aside class="panel">
+    <div class="panel-head"><h2>Access policy</h2></div>
+    <div class="panel-body">
+     <div class="statline"><strong>Public visitors</strong><span>Read published pages</span></div>
+     <div class="statline"><strong>Pending accounts</strong><span>Read-only</span></div>
+     <div class="statline"><strong>Approved editors</strong><span>Create and edit pages</span></div>
+     <div class="statline"><strong>Administrator</strong><span>Manage accounts</span></div>
+     <div class="admin-footer-actions"><button class="btn secondary" id="admin-refresh">Refresh accounts</button><button class="btn danger" id="admin-logout">Log out</button></div>
+    </div>
+   </aside>
+  </div>
+ </section>
+</main>
+
+<footer class="footer"><div class="wrap footinner"><span><strong>RBWR Wiki</strong> · Community-maintained</span><span>Independent community project</span></div></footer>
+<div class="toast" id="toast" role="status"></div>
+
 <script>
-const $=s=>document.querySelector(s);const accountMenu=$('#account-menu');const homeView=$('#home-view');const adminView=$('#admin-view');const USERS_KEY='rbwr-onefile-demo-users';const AUTH_KEY='rbwr-onefile-demo-admin';let toastTimer;
-function showToast(text){const t=$('#toast');t.textContent=text;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2400)}
-function isAdmin(){return sessionStorage.getItem(AUTH_KEY)==='true'}
-function showHome(){homeView.classList.remove('hidden');adminView.classList.remove('visible');document.title='RBWR Wiki';window.scrollTo(0,0)}
-function showAdmin(){if(!isAdmin()){showHome();accountMenu.open=true;$('#login-message').hidden=false;$('#login-message').textContent='Please log in as administrator to access this panel.';return}homeView.classList.add('hidden');adminView.classList.add('visible');accountMenu.open=false;document.title='Account management · RBWR Wiki';renderUsers();window.scrollTo(0,0)}
-function getUsers(){try{const data=JSON.parse(localStorage.getItem(USERS_KEY)||'[]');return Array.isArray(data)?data:[]}catch{return []}}
-function saveUsers(users){localStorage.setItem(USERS_KEY,JSON.stringify(users))}
-function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function renderUsers(){const filter=$('#user-search').value.trim().toLowerCase();const users=getUsers().filter(u=>(u.username+' '+u.id+' '+u.role).toLowerCase().includes(filter));$('#account-count').textContent='('+getUsers().length+')';const body=$('#users-body');if(!users.length){body.innerHTML='<tr><td colspan="4" class="empty">No matching accounts.</td></tr>';return}body.innerHTML=users.map(u=>`<tr><td><strong>${escapeHtml(u.username)}</strong>${u.id==='owner'?' <span class="muted">(you)</span>':''}</td><td>${u.id==='owner'?'—':escapeHtml(u.id||'Not set')}</td><td><span class="role ${u.role==='admin'?'admin':''}">${u.role==='admin'?'Admin':u.role==='editor'?'Editor':'Reader'}</span></td><td>${u.id==='owner'?'<span class="muted">Protected</span>':`<div class="row-actions"><button class="small-btn" data-action="role" data-id="${escapeHtml(u.id)}">Change role</button><button class="small-btn remove" data-action="remove" data-id="${escapeHtml(u.id)}">Remove</button></div>`}</td></tr>`).join('')}
-function updateHeader(){const summary=$('#account-summary');const popover=$('#login-popover');if(isAdmin()){summary.textContent='Admin';popover.innerHTML='<h2>Administrator</h2><p class="hint">Temporary local UI demo</p><button class="btn block" id="open-admin">Manage accounts <span aria-hidden="true">→</span></button><button class="btn secondary block" id="popover-logout">Log out</button><p class="login-note">Demo access only; not secure authentication.</p>';$('#open-admin').addEventListener('click',showAdmin);$('#popover-logout').addEventListener('click',logout)}else{summary.textContent='Log in';popover.innerHTML='<h2>Contributor access</h2><p class="hint">Sign in to manage wiki content</p><form id="demo-login-form"><label class="field-label" for="demo-user">Username</label><input class="field" id="demo-user" name="username" autocomplete="username" required><label class="field-label" for="demo-password">Password</label><input class="field" id="demo-password" name="password" type="password" autocomplete="current-password" required><button class="btn block" type="submit">Log in <span aria-hidden="true">→</span></button></form><p class="login-note">Reading is public. Accounts are created by the administrator.</p><p id="login-message" class="status" role="status" hidden></p>';$('#demo-login-form').addEventListener('submit',login)}}
-function login(e){e.preventDefault();const u=$('#demo-user').value.trim(),p=$('#demo-password').value;const msg=$('#login-message');if(u==='admin'&&p==='123'){sessionStorage.setItem(AUTH_KEY,'true');updateHeader();showAdmin()}else{msg.hidden=false;msg.textContent='Invalid username or password.'}}
-function logout(){sessionStorage.removeItem(AUTH_KEY);showHome();updateHeader();accountMenu.open=false;showToast('Logged out.')}
-accountMenu.addEventListener('toggle',()=>{});document.addEventListener('click',e=>{if(accountMenu.open&&!accountMenu.contains(e.target))accountMenu.open=false});document.addEventListener('keydown',e=>{if(e.key==='Escape')accountMenu.open=false});$('#brand-home').addEventListener('click',e=>{e.preventDefault();showHome();history.replaceState(null,'',location.pathname)});$('#nav-wiki').addEventListener('click',()=>{showHome()});$('#nav-about').addEventListener('click',()=>{showHome();$('#about').classList.toggle('visible');$('#about').scrollIntoView({behavior:'smooth',block:'nearest'})});$('#about-link').addEventListener('click',()=>$('#about').classList.add('visible'));document.querySelectorAll('[data-section]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showToast(a.dataset.section+' will appear here when articles are added.')}));$('#back-home').addEventListener('click',showHome);$('#logout-button').addEventListener('click',logout);$('#user-search').addEventListener('input',renderUsers);
-$('#add-user-form').addEventListener('submit',e=>{e.preventDefault();if(!isAdmin())return;const username=$('#new-username').value.trim();const id=$('#new-id').value.trim()||('demo-'+Date.now());const role=$('#new-role').value;const users=getUsers();if(users.some(u=>u.id===id||u.username.toLowerCase()===username.toLowerCase())){$('#add-message').hidden=false;$('#add-message').textContent='That username or ID is already on the list.';return}users.push({username,id,role});saveUsers(users);e.target.reset();$('#add-message').hidden=true;renderUsers();showToast('Contributor added to this browser’s demo list.')});
-$('#users-body').addEventListener('click',e=>{const b=e.target.closest('button[data-action]');if(!b||!isAdmin())return;const users=getUsers(),idx=users.findIndex(u=>u.id===b.dataset.id);if(idx<0)return;if(b.dataset.action==='remove'){if(!confirm('Remove '+users[idx].username+' from the demo account list?'))return;users.splice(idx,1);saveUsers(users);renderUsers();showToast('Account removed from demo list.')}else if(b.dataset.action==='role'){const current=users[idx].role;users[idx].role=current==='editor'?'reader':current==='reader'?'editor':'editor';saveUsers(users);renderUsers();showToast('Role changed to '+users[idx].role+'.')}});
-$('#export-users').addEventListener('click',()=>{const rows=[['Username','Roblox user ID','Role'],...getUsers().map(u=>[u.username,u.id,u.role])];const csv=rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='rbwr-wiki-accounts-demo.csv';a.click();URL.revokeObjectURL(url)});
-if(!localStorage.getItem(USERS_KEY))saveUsers([{username:'admin',id:'owner',role:'admin'}]);updateHeader();if(location.hash==='#admin'&&isAdmin())showAdmin();
-</script></body></html>
+"use strict";
+
+/*
+ * Public API endpoint. No Discord client secret belongs in this file.
+ */
+const API = "https://rbwr-wiki-api.leoncefleau-d7a.workers.dev";
+const TOKEN_KEY = "rbwr-wiki-session";
+const USER_KEY = "rbwr-wiki-user";
+
+const $ = selector => document.querySelector(selector);
+const accountMenu = $("#account-menu");
+let currentUser = null;
+let currentPage = null;
+let toastTimer;
+
+function showToast(message) {
+  const toast = $("#toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 3000);
+}
+
+function getToken() {
+  return sessionStorage.getItem(TOKEN_KEY);
+}
+
+function saveSession(token, user) {
+  sessionStorage.setItem(TOKEN_KEY, token);
+  sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+  currentUser = user;
+  updateHeader();
+}
+
+function clearSession() {
+  sessionStorage.removeItem(TOKEN_KEY);
+  sessionStorage.removeItem(USER_KEY);
+  currentUser = null;
+  updateHeader();
+}
+
+function isAdmin() {
+  return currentUser?.role === "admin";
+}
+
+function canEdit() {
+  return currentUser?.role === "admin" || currentUser?.role === "editor";
+}
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[char]);
+}
+
+async function api(path, options = {}) {
+  const headers = new Headers(options.headers || {});
+  if (options.body !== undefined) headers.set("Content-Type", "application/json");
+  if (getToken()) headers.set("Authorization", `Bearer ${getToken()}`);
+
+  const response = await fetch(API + path, {
+    ...options,
+    headers,
+    cache: "no-store"
+  });
+
+  let data = {};
+  try { data = await response.json(); } catch {}
+
+  if (response.status === 401 && path !== "/auth/exchange") {
+    clearSession();
+  }
+
+  if (!response.ok) {
+    throw new Error(data.error || `Request failed (${response.status})`);
+  }
+  return data;
+}
+
+function showView(id) {
+  document.querySelectorAll(".view").forEach(view => view.classList.remove("visible"));
+  $("#home-view").style.display = id === "home-view" ? "block" : "none";
+  if (id !== "home-view") $("#" + id).classList.add("visible");
+  accountMenu.open = false;
+  window.scrollTo(0, 0);
+}
+
+function showHome() {
+  showView("home-view");
+  document.title = "RBWR Wiki";
+  history.replaceState(null, "", location.pathname);
+}
+
+function showAdmin() {
+  if (!isAdmin()) {
+    accountMenu.open = true;
+    showLoginMessage("Administrator access is required.");
+    return;
+  }
+  showView("admin-view");
+  document.title = "Account management · RBWR Wiki";
+  loadUsers();
+}
+
+function showLoginMessage(message, success = false) {
+  const node = $("#login-message");
+  node.hidden = false;
+  node.textContent = message;
+  node.classList.toggle("ok", success);
+}
+
+function updateHeader() {
+  const summary = $("#account-summary");
+  const popover = $("#login-popover");
+
+  if (!currentUser) {
+    summary.textContent = "Log in";
+    popover.innerHTML = `
+      <h2>Contributor access</h2>
+      <p class="hint">Sign in with your Discord account</p>
+      <button class="btn block" id="discord-login" type="button">Continue with Discord <span aria-hidden="true">→</span></button>
+      <p class="login-note">Reading is public. Editing requires administrator approval.</p>
+      <p id="login-message" class="status" role="status" hidden></p>`;
+    $("#discord-login").addEventListener("click", startLogin);
+    return;
+  }
+
+  summary.textContent = currentUser.username || "Account";
+  const roleLabel = currentUser.role === "admin"
+    ? "Administrator"
+    : currentUser.role === "editor" ? "Approved editor" : "Read-only account";
+
+  popover.innerHTML = `
+    <h2>${escapeHtml(currentUser.username || "Discord account")}</h2>
+    <p class="hint">${escapeHtml(roleLabel)}</p>
+    ${isAdmin() ? '<button class="btn block" id="open-admin">Manage accounts →</button>' : ""}
+    ${canEdit() ? '<button class="btn secondary block" id="create-page">Create article +</button>' : ""}
+    <button class="btn secondary block" id="refresh-session">Refresh account status</button>
+    <button class="btn secondary block" id="popover-logout">Log out</button>
+    <p class="login-note">Your permissions are checked by the server.</p>`;
+
+  $("#popover-logout").addEventListener("click", logout);
+  $("#refresh-session").addEventListener("click", refreshUser);
+  if (isAdmin()) $("#open-admin").addEventListener("click", showAdmin);
+  if (canEdit()) $("#create-page").addEventListener("click", () => openEditor());
+}
+
+function startLogin() {
+  location.href = API + "/auth/login";
+}
+
+async function finishLogin() {
+  const params = new URLSearchParams(location.search);
+  const code = params.get("auth_code");
+  if (!code) return;
+
+  // Remove the one-use code from the visible URL immediately.
+  history.replaceState(null, "", location.pathname + location.hash);
+  accountMenu.open = true;
+  showLoginMessage("Completing Discord sign-in…");
+
+  try {
+    const result = await api("/auth/exchange", {
+      method: "POST",
+      body: JSON.stringify({ code })
+    });
+
+    saveSession(result.token, result.user);
+    showToast("Signed in with Discord.");
+    accountMenu.open = false;
+    await loadArticles();
+  } catch (error) {
+    showLoginMessage("Sign-in failed: " + error.message);
+  }
+}
+
+async function refreshUser() {
+  try {
+    const result = await api("/api/me");
+    currentUser = result.user;
+    sessionStorage.setItem(USER_KEY, JSON.stringify(currentUser));
+    updateHeader();
+    showToast("Account status refreshed.");
+    await loadArticles();
+  } catch (error) {
+    clearSession();
+    showToast("Session expired. Please sign in again.");
+  }
+}
+
+async function logout() {
+  try {
+    if (getToken()) {
+      await api("/auth/logout", { method: "POST" });
+    }
+  } catch (error) {
+    console.warn("Server logout request failed:", error.message);
+  }
+
+  clearSession();
+  showHome();
+  showToast("Logged out.");
+  await loadArticles();
+}
+
+async function restoreSession() {
+  try {
+    const saved = sessionStorage.getItem(USER_KEY);
+    if (!getToken() || !saved) {
+      clearSession();
+      return;
+    }
+
+    const result = await api("/api/me");
+    currentUser = result.user;
+    sessionStorage.setItem(USER_KEY, JSON.stringify(currentUser));
+  } catch {
+    clearSession();
+  }
+  updateHeader();
+}
+
+async function loadArticles() {
+  const container = $("#article-list");
+  const message = $("#articles-message");
+  container.innerHTML = '<p class="muted">Loading articles…</p>';
+  message.hidden = true;
+
+  try {
+    const result = await api("/api/pages");
+    const pages = result.pages || [];
+    $("#article-count").textContent = `${pages.length} ARTICLE${pages.length === 1 ? "" : "S"}`;
+
+    if (!pages.length) {
+      container.innerHTML = '<p class="muted">No articles have been published yet.</p>';
+      return;
+    }
+
+    container.innerHTML = pages.map(page => `
+      <a class="article-card" href="#page/${encodeURIComponent(page.slug)}" data-page="${escapeHtml(page.slug)}">
+        <h3>${escapeHtml(page.title)}</h3>
+        <p>Updated ${new Date(Number(page.updated_at) * 1000).toLocaleDateString()}</p>
+      </a>`).join("");
+
+    container.querySelectorAll("[data-page]").forEach(link => {
+      link.addEventListener("click", event => {
+        event.preventDefault();
+        openArticle(link.dataset.page);
+      });
+    });
+  } catch (error) {
+    container.innerHTML = '<p class="muted">Articles could not be loaded.</p>';
+    message.hidden = false;
+    message.textContent = error.message;
+  }
+}
+
+async function openArticle(slug) {
+  try {
+    const result = await api("/api/pages/" + encodeURIComponent(slug));
+    const page = result.page;
+    currentPage = page;
+
+    $("#article-title").textContent = page.title;
+    $("#article-meta").textContent =
+      "Last updated " + new Date(Number(page.updated_at) * 1000).toLocaleString();
+    $("#article-content").textContent = page.content;
+    $("#article-edit-actions").hidden = !canEdit();
+
+    showView("article-view");
+    document.title = page.title + " · RBWR Wiki";
+    history.replaceState(null, "", "#page/" + encodeURIComponent(slug));
+  } catch (error) {
+    showToast("Could not open article: " + error.message);
+  }
+}
+
+function openEditor(page = null) {
+  if (!canEdit()) {
+    accountMenu.open = true;
+    showLoginMessage("An approved editor account is required.");
+    return;
+  }
+
+  currentPage = page;
+  $("#editor-heading").textContent = page ? "Edit article" : "Create article";
+  $("#page-title").value = page?.title || "";
+  $("#page-slug").value = page?.slug || "";
+  $("#page-slug").readOnly = Boolean(page);
+  $("#page-content").value = page?.content || "";
+  $("#editor-message").hidden = true;
+  showView("editor-view");
+  document.title = (page ? "Edit article" : "Create article") + " · RBWR Wiki";
+}
+
+$("#article-form").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!canEdit()) return;
+
+  const title = $("#page-title").value.trim();
+  const slug = $("#page-slug").value.trim();
+  const content = $("#page-content").value;
+  const message = $("#editor-message");
+  const button = $("#save-page");
+
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) {
+    message.hidden = false;
+    message.textContent = "Use lowercase letters, numbers and single hyphens in the page address.";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Saving…";
+  message.hidden = true;
+
+  try {
+    await api("/api/pages/" + encodeURIComponent(slug), {
+      method: currentPage ? "PUT" : "POST",
+      body: JSON.stringify({ title, content })
+    });
+
+    showToast(currentPage ? "Article updated." : "Article created.");
+    currentPage = null;
+    await loadArticles();
+    await openArticle(slug);
+  } catch (error) {
+    message.hidden = false;
+    message.textContent = error.message;
+  } finally {
+    button.disabled = false;
+    button.textContent = "Save article";
+  }
+});
+
+async function loadUsers() {
+  const body = $("#users-body");
+  const message = $("#users-message");
+  body.innerHTML = '<tr><td colspan="4" class="empty">Loading accounts…</td></tr>';
+  message.hidden = true;
+
+  try {
+    const result = await api("/api/admin/users");
+    const filter = $("#user-search").value.trim().toLowerCase();
+    const users = (result.users || []).filter(user =>
+      [user.username, user.discord_id, user.role].join(" ").toLowerCase().includes(filter)
+    );
+
+    $("#account-count").textContent = `(${result.users.length})`;
+
+    if (!users.length) {
+      body.innerHTML = '<tr><td colspan="4" class="empty">No matching accounts.</td></tr>';
+      return;
+    }
+
+    body.innerHTML = users.map(user => {
+      const role = user.role;
+      const roleLabel = role === "admin" ? "Administrator"
+        : role === "editor" ? "Editor" : "Read-only";
+
+      let actions = '<span class="muted">Protected</span>';
+      if (role !== "admin") {
+        actions = role === "editor"
+          ? `<button class="small-btn remove" data-action="revoke" data-id="${escapeHtml(user.discord_id)}">Revoke editor</button>`
+          : `<button class="small-btn" data-action="approve" data-id="${escapeHtml(user.discord_id)}">Approve editor</button>`;
+      }
+
+      return `<tr>
+        <td><strong>${escapeHtml(user.username)}</strong></td>
+        <td><code>${escapeHtml(user.discord_id)}</code></td>
+        <td><span class="role ${role === "admin" ? "admin" : role === "editor" ? "editor" : ""}">${escapeHtml(roleLabel)}</span></td>
+        <td><div class="row-actions">${actions}</div></td>
+      </tr>`;
+    }).join("");
+  } catch (error) {
+    body.innerHTML = '<tr><td colspan="4" class="empty">Could not load accounts.</td></tr>';
+    message.hidden = false;
+    message.textContent = error.message;
+  }
+}
+
+$("#users-body").addEventListener("click", async event => {
+  const button = event.target.closest("button[data-action]");
+  if (!button || !isAdmin()) return;
+
+  const id = button.dataset.id;
+  const action = button.dataset.action;
+  const approve = action === "approve";
+
+  if (!confirm(`${approve ? "Approve" : "Revoke editing access for"} Discord account ${id}?`)) return;
+
+  button.disabled = true;
+  try {
+    await api(`/api/admin/users/${encodeURIComponent(id)}/${action}`, { method: "POST" });
+    showToast(approve ? "Editor approved." : "Editing access revoked.");
+    await loadUsers();
+  } catch (error) {
+    showToast("Permission change failed: " + error.message);
+    button.disabled = false;
+  }
+});
+
+$("#discord-login").addEventListener("click", startLogin);
+$("#brand-home").addEventListener("click", event => {
+  event.preventDefault();
+  showHome();
+});
+$("#nav-wiki").addEventListener("click", () => showHome());
+$("#nav-about").addEventListener("click", () => {
+  showHome();
+  $("#about").classList.toggle("visible");
+  $("#about").scrollIntoView({ behavior: "smooth", block: "nearest" });
+});
+$("#about-link").addEventListener("click", () => $("#about").classList.add("visible"));
+document.querySelectorAll("[data-section]").forEach(link => link.addEventListener("click", event => {
+  event.preventDefault();
+  showToast("No article has been assigned to this section yet.");
+}));
+$("#back-home").addEventListener("click", showHome);
+$("#article-back").addEventListener("click", async () => {
+  showHome();
+  await loadArticles();
+});
+$("#editor-cancel").addEventListener("click", () => {
+  if (currentPage) openArticle(currentPage.slug);
+  else showHome();
+});
+$("#cancel-page").addEventListener("click", () => {
+  if (currentPage) openArticle(currentPage.slug);
+  else showHome();
+});
+$("#edit-article-button").addEventListener("click", () => openEditor(currentPage));
+$("#admin-logout").addEventListener("click", logout);
+$("#admin-refresh").addEventListener("click", loadUsers);
+$("#user-search").addEventListener("input", loadUsers);
+
+document.addEventListener("click", event => {
+  if (accountMenu.open && !accountMenu.contains(event.target)) accountMenu.open = false;
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") accountMenu.open = false;
+});
+
+$("#page-title").addEventListener("input", () => {
+  if ($("#page-slug").readOnly || $("#page-slug").dataset.touched === "true") return;
+  $("#page-slug").value = $("#page-title").value
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 100);
+});
+$("#page-slug").addEventListener("input", () => {
+  $("#page-slug").dataset.touched = "true";
+});
+
+async function init() {
+  updateHeader();
+  await restoreSession();
+  await finishLogin();
+  await loadArticles();
+
+  // Support reloading a directly opened article link.
+  const match = location.hash.match(/^#page\/(.+)$/);
+  if (match) {
+    try {
+      await openArticle(decodeURIComponent(match[1]));
+    } catch {}
+  }
+}
+
+init();
+</script>
+</body>
+</html>
